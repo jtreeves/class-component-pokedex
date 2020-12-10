@@ -20,18 +20,23 @@ class Pokedex extends Component {
             })
     }
 
-    componentDidUpdate() {
+    componentDidUpdate(prevProps, prevState) {
         if (this.state.pokemonValue === '') {
+            return
+        }
+        if (prevState.pokemonName === this.state.pokemonName) {
             return
         }
         Axios
             .get(`https://pokeapi.co/api/v2/pokemon/${this.state.pokemonName}`)
             .then((res) => {
+                console.log('SUCCESS')
                 this.setState({
                     pokemonImage: res.data.sprites.front_default
                 })
             })
             .catch((err) => {
+                console.log('FAILURE')
                 this.setState({
                     pokemonImage: ''
                 })
