@@ -19,11 +19,21 @@ class Pokedex extends Component {
     }
 
     componentDidUpdate() {
-        Axios.get(`https://pokeapi.co/api/v2/pokemon/${this.state.pokemonName}`).then((res) => {
-            this.setState({
-                pokemonImage: res.data.sprites.front_default
+        if (this.state.pokemonValue === '') {
+            return
+        }
+        Axios
+            .get(`https://pokeapi.co/api/v2/pokemon/${this.state.pokemonName}`)
+            .then((res) => {
+                this.setState({
+                    pokemonImage: res.data.sprites.front_default
+                })
             })
-        })
+            .catch((err) => {
+                this.setState({
+                    pokemonImage: ''
+                })
+            })
     }
 
     render() {
